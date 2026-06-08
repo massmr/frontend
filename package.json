@@ -1,0 +1,11 @@
+{
+  "name": "ewokbot-init-frontend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "node --check src/app.js",
+    "typecheck": "node --check src/app.js",
+    "test": "node --test",
+    "build": "node src/app.js"
+  }
+}
