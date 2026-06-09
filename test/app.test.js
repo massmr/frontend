@@ -14,8 +14,17 @@ test('serves health and onboarding responses over HTTP', () => {
   assert.equal(health.statusCode, 200);
   assert.deepEqual(JSON.parse(health.body), { status: 'ok' });
 
+  const homepage = dispatch('/');
+  assert.equal(homepage.statusCode, 200);
+  assert.equal(homepage.headers['content-type'], 'text/html; charset=utf-8');
+  assert.match(homepage.body, /<!doctype html>/iu);
+  assert.match(homepage.body, new RegExp(getOnboardingEmptyState().title, 'u'));
+  assert.match(homepage.body, new RegExp(getOnboardingEmptyState().body, 'u'));
+  assert.match(homepage.body, /Create project/u);
+
   const onboarding = dispatch('/onboarding');
   assert.equal(onboarding.statusCode, 200);
+  assert.equal(onboarding.headers['content-type'], 'application/json; charset=utf-8');
   assert.deepEqual(JSON.parse(onboarding.body), getOnboardingEmptyState());
 });
 

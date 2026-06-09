@@ -1,6 +1,6 @@
 import { createServer } from 'node:http';
 
-import { getOnboardingEmptyState } from './app.js';
+import { getOnboardingEmptyState, renderOnboardingPage } from './app.js';
 
 export function createAppServer() {
   return createServer(handleAppRequest);
@@ -15,7 +15,13 @@ export function handleAppRequest(request, response) {
     return;
   }
 
-  if (url.pathname === '/' || url.pathname === '/onboarding') {
+  if (url.pathname === '/') {
+    response.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });
+    response.end(renderOnboardingPage());
+    return;
+  }
+
+  if (url.pathname === '/onboarding') {
     response.writeHead(200, { 'content-type': 'application/json; charset=utf-8' });
     response.end(JSON.stringify(getOnboardingEmptyState()));
     return;
