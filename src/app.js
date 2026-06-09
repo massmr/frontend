@@ -1,7 +1,7 @@
 export function getOnboardingEmptyState() {
   return {
-    title: 'Welcome',
-    body: 'Create your first project to get started.'
+    title: 'Create your first project',
+    body: 'Start by creating a project so you can add your details and begin onboarding.'
   };
 }
 
