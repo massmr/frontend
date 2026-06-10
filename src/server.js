@@ -15,7 +15,37 @@ export function handleAppRequest(request, response) {
     return;
   }
 
-  if (url.pathname === '/' || url.pathname === '/onboarding') {
+  if (url.pathname === '/') {
+    const state = getOnboardingEmptyState();
+    const html = `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>${state.title}</title>
+    <style>
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial; padding: 40px; }
+      .container { max-width: 700px; margin: 0 auto; }
+      h1 { font-size: 28px; margin-bottom: 8px; }
+      p { color: #444; }
+      .primary { display: inline-block; margin-top: 20px; padding: 10px 14px; background: #0070f3; color: white; border-radius: 6px; text-decoration: none; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>${state.title}</h1>
+      <p>${state.body}</p>
+      <a href="/create" class="primary">Create project</a>
+    </div>
+  </body>
+</html>`;
+
+    response.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });
+    response.end(html);
+    return;
+  }
+
+  if (url.pathname === '/onboarding') {
     response.writeHead(200, { 'content-type': 'application/json; charset=utf-8' });
     response.end(JSON.stringify(getOnboardingEmptyState()));
     return;
