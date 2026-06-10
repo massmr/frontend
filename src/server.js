@@ -15,7 +15,36 @@ export function handleAppRequest(request, response) {
     return;
   }
 
-  if (url.pathname === '/' || url.pathname === '/onboarding') {
+  if (url.pathname === '/') {
+    // Render a minimal HTML onboarding page using the same copy as the JSON
+    const state = getOnboardingEmptyState();
+    const html = `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>${escapeHtml(state.title)}</title>
+    <style>
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; padding: 2rem; }
+      .container { max-width: 640px; margin: 0 auto; }
+      .primary { display: inline-block; margin-top: 1rem; padding: .5rem 1rem; background: #2563eb; color: white; border-radius: 6px; text-decoration: none; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>${escapeHtml(state.title)}</h1>
+      <p>${escapeHtml(state.body)}</p>
+      <a class="primary" href="#">Create project</a>
+    </div>
+  </body>
+</html>`;
+
+    response.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });
+    response.end(html);
+    return;
+  }
+
+  if (url.pathname === '/onboarding') {
     response.writeHead(200, { 'content-type': 'application/json; charset=utf-8' });
     response.end(JSON.stringify(getOnboardingEmptyState()));
     return;
@@ -23,6 +52,16 @@ export function handleAppRequest(request, response) {
 
   response.writeHead(404, { 'content-type': 'application/json; charset=utf-8' });
   response.end(JSON.stringify({ error: 'not_found' }));
+}
+
+function escapeHtml(str) {
+  // Minimal HTML escaper for untrusted content
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 if (process.argv[1] === new URL(import.meta.url).pathname) {
