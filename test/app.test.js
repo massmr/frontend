@@ -17,6 +17,13 @@ test('serves health and onboarding responses over HTTP', () => {
   const onboarding = dispatch('/onboarding');
   assert.equal(onboarding.statusCode, 200);
   assert.deepEqual(JSON.parse(onboarding.body), getOnboardingEmptyState());
+
+  // Root should now return an HTML onboarding page containing the same copy
+  const root = dispatch('/');
+  assert.equal(root.statusCode, 200);
+  assert.match(root.body, new RegExp(getOnboardingEmptyState().title));
+  assert.match(root.body, new RegExp(getOnboardingEmptyState().body));
+  assert.match(root.body, /Create project/);
 });
 
 function dispatch(url) {
