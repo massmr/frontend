@@ -13,17 +13,23 @@ test('serves health and onboarding responses over HTTP', () => {
   const health = dispatch('/health');
   assert.equal(health.statusCode, 200);
   assert.deepEqual(JSON.parse(health.body), { status: 'ok' });
+  assert.equal(health.headers['content-type'], 'application/json; charset=utf-8');
 
   const onboarding = dispatch('/onboarding');
   assert.equal(onboarding.statusCode, 200);
   assert.deepEqual(JSON.parse(onboarding.body), getOnboardingEmptyState());
+  assert.equal(onboarding.headers['content-type'], 'application/json; charset=utf-8');
 
-  // Root should now return an HTML onboarding page containing the same copy
   const root = dispatch('/');
   assert.equal(root.statusCode, 200);
-  assert.match(root.body, new RegExp(getOnboardingEmptyState().title));
-  assert.match(root.body, new RegExp(getOnboardingEmptyState().body));
-  assert.match(root.body, /Create project/);
+  assert.equal(root.headers['content-type'], 'text/html; charset=utf-8');
+  assert.match(root.body, /<title>Welcome \| Ewokbot Frontend<\/title>/u);
+  assert.match(root.body, /<h1[^>]*>Welcome<\/h1>/u);
+  assert.match(root.body, /Create your first project to get started\./u);
+  assert.match(root.body, /Ewokbot Frontend/u);
+  assert.match(root.body, /Railway/u);
+  assert.match(root.body, /develop/u);
+  assert.match(root.body, /Ready/u);
 });
 
 function dispatch(url) {
