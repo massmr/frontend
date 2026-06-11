@@ -26,9 +26,11 @@ test('serves health and onboarding responses over HTTP', () => {
   assert.match(root.body, /<title>Welcome \| Ewokbot Frontend<\/title>/u);
   assert.match(root.body, /<h1[^>]*>Welcome<\/h1>/u);
   assert.match(root.body, /Create your first project to get started\./u);
-  assert.match(root.body, /Ewokbot Frontend/u);
+  assert.match(root.body, /Deployment status/u);
+  assert.match(root.body, /Environment: staging/u);
+  assert.match(root.body, /Branch: develop/u);
   assert.match(root.body, /Railway/u);
-  assert.match(root.body, /develop/u);
+  assert.match(root.body, /Status: Ready/u);
   assert.match(root.body, /Ready/u);
 });
 

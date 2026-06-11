@@ -52,14 +52,11 @@ function renderHomePage(state) {
       p { margin: 0; line-height: 1.6; color: #374151; }
       .status { margin-top: 20px; padding: 24px 32px 28px; }
       .status h2 { margin: 0 0 16px; font-size: 1.1rem; }
-      .status-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-      .status-item { padding: 16px; border-radius: 14px; background: #f9fafb; border: 1px solid #e5e7eb; }
-      .status-label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: #6b7280; margin-bottom: 8px; }
-      .status-value { font-size: 1.05rem; font-weight: 700; color: #111827; }
+      .status-list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+      .status-row { padding: 16px; border-radius: 14px; background: #f9fafb; border: 1px solid #e5e7eb; font-size: 1rem; font-weight: 600; color: #111827; }
       @media (max-width: 640px) {
         .page { padding: 20px 16px 40px; }
         .hero, .status { padding-left: 20px; padding-right: 20px; border-radius: 16px; }
-        .status-grid { grid-template-columns: 1fr; }
       }
     </style>
   </head>
@@ -72,25 +69,17 @@ function renderHomePage(state) {
       </section>
 
       <section class="status" aria-labelledby="deployment-status-title">
-        <h2 id="deployment-status-title">Deployment verification</h2>
-        <div class="status-grid">
-          ${renderStatusItem('App name', 'Ewokbot Frontend')}
-          ${renderStatusItem('Deployment target', 'Railway')}
-          ${renderStatusItem('Branch', 'develop')}
-          ${renderStatusItem('Status', 'Ready')}
+        <h2 id="deployment-status-title">Deployment status</h2>
+        <div class="status-list">
+          <div class="status-row">Environment: staging</div>
+          <div class="status-row">Branch: develop</div>
+          <div class="status-row">Runtime: Railway</div>
+          <div class="status-row">Status: Ready</div>
         </div>
       </section>
     </main>
   </body>
 </html>`;
-}
-
-function renderStatusItem(label, value) {
-  return `
-          <div class="status-item">
-            <span class="status-label">${escapeHtml(label)}</span>
-            <div class="status-value">${escapeHtml(value)}</div>
-          </div>`;
 }
 
 function escapeHtml(str) {
