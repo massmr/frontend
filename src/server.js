@@ -50,7 +50,10 @@ function renderHomePage(state) {
       .eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: #dbeafe; color: #1d4ed8; font-size: 0.875rem; font-weight: 600; }
       h1 { margin: 18px 0 12px; font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1.05; }
       p { margin: 0; line-height: 1.6; color: #374151; }
-      .smoke-test-marker { margin-top: 16px; font-size: 0.875rem; font-weight: 600; color: #0f766e; }
+      .badge-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+      .verification-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; background: #ecfeff; border: 1px solid #99f6e4; color: #0f766e; font-size: 0.875rem; font-weight: 700; }
+      .verification-badge small { font-weight: 600; color: #0f766e; }
+      .smoke-test-marker { font-size: 0.875rem; font-weight: 600; color: #0f766e; }
       .status { margin-top: 20px; padding: 24px 32px 28px; }
       .status h2 { margin: 0 0 16px; font-size: 1.1rem; }
       .status-list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
@@ -67,7 +70,10 @@ function renderHomePage(state) {
         <span class="eyebrow">Ewokbot Frontend</span>
         <h1 id="onboarding-title">${escapeHtml(state.title)}</h1>
         <p>${escapeHtml(state.body)}</p>
-        <div class="smoke-test-marker">Ewokbot Railway smoke test</div>
+        <div class="badge-row" aria-label="Railway verification status">
+          <span class="verification-badge">Railway verified <small>Railway polling check</small></span>
+          <div class="smoke-test-marker">Ewokbot Railway smoke test</div>
+        </div>
       </section>
 
       <section class="status" aria-labelledby="deployment-status-title">
